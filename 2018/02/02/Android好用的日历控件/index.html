@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="安卓,转载," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="需求最近项目中需要用到日历控件，需求如下  同时支持周模式和月模式 支持边界设置，有些地方要求只显示当前周和下一周 支持日期禁用，某些特定的日期不允许点击 支持自定义的选中日期的样式 左右滑动自动切换周、月，同时自动选中同等位置的日期。  找来找去，最后发现GitHub的material-calendarview这个项目最贴近以上需求，稍作修改就能用了。 material-calendarvie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android好用的日历控件">
+<meta property="og:url" content="https://evan-yjq.github.io/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Evan的小院">
+<meta property="og:description" content="需求最近项目中需要用到日历控件，需求如下  同时支持周模式和月模式 支持边界设置，有些地方要求只显示当前周和下一周 支持日期禁用，某些特定的日期不允许点击 支持自定义的选中日期的样式 左右滑动自动切换周、月，同时自动选中同等位置的日期。  找来找去，最后发现GitHub的material-calendarview这个项目最贴近以上需求，稍作修改就能用了。 material-calendarvie">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/1.png">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/2.png">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/3.png">
+<meta property="article:published_time" content="2018-02-02T15:27:04.000Z">
+<meta property="article:modified_time" content="2018-02-02T16:08:10.000Z">
+<meta property="article:author" content="Evan">
+<meta property="article:tag" content="安卓">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://evan-yjq.github.io/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evan-yjq.github.io/2018/02/02/Android好用的日历控件/"/>
+
+
+
+
+
+  <title>Android好用的日历控件 | Evan的小院</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evan的小院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evan-yjq.github.io/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Evan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evan的小院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android好用的日历控件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T23:27:04+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%89%E5%8D%93/" itemprop="url" rel="index">
+                    <span itemprop="name">安卓</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/1.png" alt="1"></p>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>最近项目中需要用到日历控件，需求如下</p>
+<ol>
+<li>同时支持周模式和月模式</li>
+<li>支持边界设置，有些地方要求只显示当前周和下一周</li>
+<li>支持日期禁用，某些特定的日期不允许点击</li>
+<li>支持自定义的选中日期的样式</li>
+<li>左右滑动自动切换周、月，同时自动选中同等位置的日期。</li>
+</ol>
+<p>找来找去，最后发现GitHub的<a href="https://link.jianshu.com/?t=https://github.com/prolificinteractive/material-calendarview" target="_blank" rel="noopener">material-calendarview</a>这个项目最贴近以上需求，稍作修改就能用了。</p>
+<h2 id="material-calendarview"><a href="#material-calendarview" class="headerlink" title="material-calendarview"></a>material-calendarview</h2><p>项目开源地址：</p>
+<p><a href="https://link.jianshu.com/?t=https://github.com/prolificinteractive/material-calendarview" target="_blank" rel="noopener">https://github.com/prolificinteractive/material-calendarview</a></p>
+<h3 id="集成清单"><a href="#集成清单" class="headerlink" title="集成清单"></a>集成清单</h3><ol>
+<li>添加<code>compile &#39;com.prolificinteractive:material-calendarview:1.4.3&#39;</code></li>
+<li>添加日历控件到布局中</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.prolificinteractive.materialcalendarview.MaterialCalendarView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/calendarView"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:mcv_showOtherDates</span>=<span class="string">"all"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:mcv_selectionColor</span>=<span class="string">"#00F"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="功能展示"><a href="#功能展示" class="headerlink" title="功能展示"></a>功能展示</h3><p>material-calendarview项目提供9个Sample来展示其功能用法</p>
+<h4 id="一、对照组：OldCalendarViewActivity"><a href="#一、对照组：OldCalendarViewActivity" class="headerlink" title="一、对照组：OldCalendarViewActivity"></a>一、对照组：OldCalendarViewActivity</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">CalendarView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/calendarView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"300dp"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>采用系统控件<code>CalendarView</code>，实现一个点击显示日期的功能，可惜在低版本Android手机上没有material的样式，颜值很低，不能用。</p>
+<h4 id="二、基本用法：BasicActivity"><a href="#二、基本用法：BasicActivity" class="headerlink" title="二、基本用法：BasicActivity"></a>二、基本用法：BasicActivity</h4><ol>
+<li>绑定控件</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bind</span>(R.id.calendarView)</span><br><span class="line">MaterialCalendarView widget;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>OnDateSelectedListener</code>：用来监听选中日期的变化，</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The callback used to indicate a date has been selected or deselected</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnDateSelectedListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Called when a user clicks on a day.</span></span><br><span class="line"><span class="comment">     * There is no logic to prevent multiple calls for the same date and state.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> widget   the view associated with this listener</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> date     the date that was selected or unselected</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> selected true if the day is now selected, false otherwise</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDateSelected</span><span class="params">(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, <span class="keyword">boolean</span> selected)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li><code>OnMonthChangedListener</code>：用来接听页面滑动的变化，这个有点名不副实，因为在周模式的时候，滑动页面是按周来变化的。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The callback used to indicate the user changes the displayed month</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnMonthChangedListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Called upon change of the selected day</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> widget the view associated with this listener</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> date   the month picked, as the first day of the month</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onMonthChanged</span><span class="params">(MaterialCalendarView widget, CalendarDay date)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>getSelectedDate()</code>：获取被选中的日期。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getSelectedDatesString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    CalendarDay date = widget.getSelectedDate();</span><br><span class="line">    <span class="keyword">if</span> (date == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"No Selection"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> FORMATTER.format(date.getDate());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、修饰选中日期：BasicActivityDecorated"><a href="#三、修饰选中日期：BasicActivityDecorated" class="headerlink" title="三、修饰选中日期：BasicActivityDecorated"></a>三、修饰选中日期：BasicActivityDecorated</h4><ol>
+<li>设置日期范围</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">widget.setShowOtherDates(MaterialCalendarView.SHOW_ALL);</span><br><span class="line">Calendar instance = Calendar.getInstance();</span><br><span class="line">widget.setSelectedDate(instance.getTime());</span><br><span class="line">Calendar instance1 = Calendar.getInstance();</span><br><span class="line">instance1.set(instance1.get(Calendar.YEAR), Calendar.JANUARY, <span class="number">1</span>);</span><br><span class="line">Calendar instance2 = Calendar.getInstance();</span><br><span class="line">instance2.set(instance2.get(Calendar.YEAR), Calendar.DECEMBER, <span class="number">31</span>);</span><br><span class="line">widget.state().edit()</span><br><span class="line">        .setMinimumDate(instance1.getTime())</span><br><span class="line">        .setMaximumDate(instance2.getTime())</span><br><span class="line">        .commit();</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>增加日期修饰</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">widget.addDecorators(</span><br><span class="line">        <span class="keyword">new</span> MySelectorDecorator(<span class="keyword">this</span>),</span><br><span class="line">        <span class="keyword">new</span> HighlightWeekendsDecorator(),</span><br><span class="line">        oneDayDecorator</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>案例提供了三种修饰：</p>
+<ol>
+<li>对选中日期增加指定背景图层</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySelectorDecorator</span> <span class="keyword">implements</span> <span class="title">DayViewDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Drawable drawable;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MySelectorDecorator</span><span class="params">(Activity context)</span> </span>&#123;</span><br><span class="line">        drawable = context.getResources().getDrawable(R.drawable.my_selector);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldDecorate</span><span class="params">(CalendarDay day)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">decorate</span><span class="params">(DayViewFacade view)</span> </span>&#123;</span><br><span class="line">        view.setSelectionDrawable(drawable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>对周末增加指定背景图层</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Highlight Saturdays and Sundays with a background</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HighlightWeekendsDecorator</span> <span class="keyword">implements</span> <span class="title">DayViewDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Calendar calendar = Calendar.getInstance();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Drawable highlightDrawable;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> color = Color.parseColor(<span class="string">"#228BC34A"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HighlightWeekendsDecorator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        highlightDrawable = <span class="keyword">new</span> ColorDrawable(color);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldDecorate</span><span class="params">(CalendarDay day)</span> </span>&#123;</span><br><span class="line">        day.copyTo(calendar);</span><br><span class="line">        <span class="keyword">int</span> weekDay = calendar.get(Calendar.DAY_OF_WEEK);</span><br><span class="line">        <span class="keyword">return</span> weekDay == Calendar.SATURDAY || weekDay == Calendar.SUNDAY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">decorate</span><span class="params">(DayViewFacade view)</span> </span>&#123;</span><br><span class="line">        view.setBackgroundDrawable(highlightDrawable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>对选中日期增加指定修饰</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Decorate a day by making the text big and bold</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OneDayDecorator</span> <span class="keyword">implements</span> <span class="title">DayViewDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CalendarDay date;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OneDayDecorator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        date = CalendarDay.today();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldDecorate</span><span class="params">(CalendarDay day)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> date != <span class="keyword">null</span> &amp;&amp; day.equals(date);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">decorate</span><span class="params">(DayViewFacade view)</span> </span>&#123;</span><br><span class="line">        view.addSpan(<span class="keyword">new</span> StyleSpan(Typeface.BOLD));</span><br><span class="line">        view.addSpan(<span class="keyword">new</span> RelativeSizeSpan(<span class="number">3.0f</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * We're changing the internals, so make sure to call &#123;<span class="doctag">@linkplain</span> MaterialCalendarView#invalidateDecorators()&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDate</span><span class="params">(Date date)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.date = CalendarDay.from(date);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>对特定日期增加红点修饰</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Decorate several days with a dot</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EventDecorator</span> <span class="keyword">implements</span> <span class="title">DayViewDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> color;</span><br><span class="line">    <span class="keyword">private</span> HashSet&lt;CalendarDay&gt; dates;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EventDecorator</span><span class="params">(<span class="keyword">int</span> color, Collection&lt;CalendarDay&gt; dates)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">        <span class="keyword">this</span>.dates = <span class="keyword">new</span> HashSet&lt;&gt;(dates);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldDecorate</span><span class="params">(CalendarDay day)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dates.contains(day);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">decorate</span><span class="params">(DayViewFacade view)</span> </span>&#123;</span><br><span class="line">        view.addSpan(<span class="keyword">new</span> DotSpan(<span class="number">5</span>, color));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="四、模式切换：SwappableBasicActivityDecorated"><a href="#四、模式切换：SwappableBasicActivityDecorated" class="headerlink" title="四、模式切换：SwappableBasicActivityDecorated"></a>四、模式切换：SwappableBasicActivityDecorated</h4><p>切换周模式、月模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@OnClick</span>(R.id.button_weeks)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSetWeekMode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    widget.state().edit()</span><br><span class="line">            .setCalendarDisplayMode(CalendarMode.WEEKS)</span><br><span class="line">            .commit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnClick</span>(R.id.button_months)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSetMonthMode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    widget.state().edit()</span><br><span class="line">            .setCalendarDisplayMode(CalendarMode.MONTHS)</span><br><span class="line">            .commit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="五、日期禁用：DisableDaysActivity"><a href="#五、日期禁用：DisableDaysActivity" class="headerlink" title="五、日期禁用：DisableDaysActivity"></a>五、日期禁用：DisableDaysActivity</h4><p>核心代码是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DayViewFacade view</span><br><span class="line">view.setDaysDisabled(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这个作者非常喜欢用<code>装饰模式</code>。所以对<code>DayViewFacade</code>的修饰可以无穷的累加。只要集成<code>DayViewDecorator</code>就可以。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Decorate Day views with drawables and text manipulation</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DayViewDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Determine if a specific day should be decorated</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> day &#123;<span class="doctag">@linkplain</span> CalendarDay&#125; to possibly decorate</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if this decorator should be applied to the provided day</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">shouldDecorate</span><span class="params">(CalendarDay day)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Set decoration options onto a facade to be applied to all relevant days</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> view View to decorate</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">decorate</span><span class="params">(DayViewFacade view)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="六、透过xml自定义控件：CustomizeXmlActivity"><a href="#六、透过xml自定义控件：CustomizeXmlActivity" class="headerlink" title="六、透过xml自定义控件：CustomizeXmlActivity"></a>六、透过xml自定义控件：CustomizeXmlActivity</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.prolificinteractive.materialcalendarview.MaterialCalendarView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/calendarView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_showOtherDates</span>=<span class="string">"all"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_arrowColor</span>=<span class="string">"?attr/colorPrimary"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_leftArrowMask</span>=<span class="string">"@drawable/ic_navigation_arrow_back"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_rightArrowMask</span>=<span class="string">"@drawable/ic_navigation_arrow_forward"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_selectionColor</span>=<span class="string">"?attr/colorPrimary"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_headerTextAppearance</span>=<span class="string">"?android:attr/textAppearanceMedium"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_dateTextAppearance</span>=<span class="string">"@style/CustomDayTextAppearance"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_weekDayTextAppearance</span>=<span class="string">"?android:attr/textAppearanceMedium"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_weekDayLabels</span>=<span class="string">"@array/custom_weekdays"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_monthLabels</span>=<span class="string">"@array/custom_months"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_tileSize</span>=<span class="string">"36dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_firstDayOfWeek</span>=<span class="string">"thursday"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:mcv_calendarMode</span>=<span class="string">"week"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>xml中能设置的属性很多，常用的如下：</p>
+<ul>
+<li>mcv_showOtherDates：日期范围</li>
+<li>mcv_firstDayOfWeek：一周的第一天</li>
+<li>mcv_calendarMode：日历模式</li>
+</ul>
+<h4 id="七、透过java自定义控件：CustomizeCodeActivity"><a href="#七、透过java自定义控件：CustomizeCodeActivity" class="headerlink" title="七、透过java自定义控件：CustomizeCodeActivity"></a>七、透过java自定义控件：CustomizeCodeActivity</h4><p>效果和xml是一致的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">widget.setShowOtherDates(MaterialCalendarView.SHOW_ALL);</span><br><span class="line">widget.setArrowColor(getResources().getColor(R.color.sample_primary));</span><br><span class="line">widget.setLeftArrowMask(getResources().getDrawable(R.drawable.ic_navigation_arrow_back));</span><br><span class="line">widget.setRightArrowMask(getResources().getDrawable(R.drawable.ic_navigation_arrow_forward));</span><br><span class="line">widget.setSelectionColor(getResources().getColor(R.color.sample_primary));</span><br><span class="line">widget.setHeaderTextAppearance(R.style.TextAppearance_AppCompat_Medium);</span><br><span class="line">widget.setWeekDayTextAppearance(R.style.TextAppearance_AppCompat_Medium);</span><br><span class="line">widget.setDateTextAppearance(R.style.CustomDayTextAppearance);</span><br><span class="line">widget.setTitleFormatter(<span class="keyword">new</span> MonthArrayTitleFormatter(getResources().getTextArray(R.array.custom_months)));</span><br><span class="line">widget.setWeekDayFormatter(<span class="keyword">new</span> ArrayWeekDayFormatter(getResources().getTextArray(R.array.custom_weekdays)));</span><br><span class="line">widget.setTileSize((<span class="keyword">int</span>) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, <span class="number">36</span>, getResources().getDisplayMetrics()));</span><br><span class="line"></span><br><span class="line">CalendarDay today = CalendarDay.from(<span class="number">2016</span>, <span class="number">5</span>, <span class="number">2</span>);</span><br><span class="line">widget.setCurrentDate(today);</span><br><span class="line">widget.setSelectedDate(today);</span><br><span class="line"></span><br><span class="line">widget.state().edit()</span><br><span class="line">        .setFirstDayOfWeek(Calendar.WEDNESDAY)</span><br><span class="line">        .setMinimumDate(CalendarDay.from(<span class="number">2016</span>, <span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">        .setMaximumDate(CalendarDay.from(<span class="number">2016</span>, <span class="number">5</span>, <span class="number">12</span>))</span><br><span class="line">        .setCalendarDisplayMode(CalendarMode.WEEKS)</span><br><span class="line">        .commit();</span><br></pre></td></tr></table></figure>
+
+<h4 id="八、完整的设置展示DynamicSettersActivity"><a href="#八、完整的设置展示DynamicSettersActivity" class="headerlink" title="八、完整的设置展示DynamicSettersActivity"></a>八、完整的设置展示DynamicSettersActivity</h4><p><img src="/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/2.png" alt="2"></p>
+<h4 id="九、在Dialog中显示日历：DialogsActivity"><a href="#九、在Dialog中显示日历：DialogsActivity" class="headerlink" title="九、在Dialog中显示日历：DialogsActivity"></a>九、在Dialog中显示日历：DialogsActivity</h4><p><img src="/2018/02/02/Android%E5%A5%BD%E7%94%A8%E7%9A%84%E6%97%A5%E5%8E%86%E6%8E%A7%E4%BB%B6/3.png" alt="3"></p>
+<h3 id="拓展：滑屏时自动选中日期"><a href="#拓展：滑屏时自动选中日期" class="headerlink" title="拓展：滑屏时自动选中日期"></a>拓展：滑屏时自动选中日期</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">widget.setOnDateChangedListener(<span class="keyword">new</span> OnDateSelectedListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDateSelected</span><span class="params">(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, <span class="keyword">boolean</span> selected)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (selected &amp;&amp; date != <span class="keyword">null</span>)&#123;</span><br><span class="line">            dayOfWeek = date.getCalendar().get(Calendar.DAY_OF_WEEK);</span><br><span class="line">            dayofMonth = date.getCalendar().get(Calendar.DAY_OF_MONTH);</span><br><span class="line">        &#125;</span><br><span class="line">        Log.d(TAG, <span class="string">"date = "</span> + date);</span><br><span class="line">        Log.d(TAG, <span class="string">"dayOfWeek = "</span> + dayOfWeek);</span><br><span class="line">        Log.d(TAG, <span class="string">"dayofMonth = "</span> + dayofMonth);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">widget.setOnMonthChangedListener(<span class="keyword">new</span> OnMonthChangedListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMonthChanged</span><span class="params">(<span class="keyword">final</span> MaterialCalendarView widget, CalendarDay date)</span> </span>&#123;</span><br><span class="line">        Calendar c = date.getCalendar();</span><br><span class="line">        Log.d(TAG, <span class="string">"date = "</span> + date);</span><br><span class="line">        Calendar now = c;</span><br><span class="line">        <span class="keyword">if</span> (widget.state().calendarMode == CalendarMode.WEEKS)&#123;</span><br><span class="line">            now.set(Calendar.DAY_OF_WEEK, c.get(Calendar.DAY_OF_WEEK) + dayOfWeek - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            now.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + dayofMonth - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        CalendarDay nowDate = CalendarDay.from(now);</span><br><span class="line">        Log.d(TAG, <span class="string">"nowDate = "</span> + nowDate);</span><br><span class="line">        widget.setSelectedDate(nowDate);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Calendar instance = Calendar.getInstance();</span><br><span class="line">widget.setSelectedDate(instance.getTime());</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://www.jianshu.com/p/8396a4d39c01" target="_blank" rel="noopener">原文链接</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AE%89%E5%8D%93/" rel="tag"># 安卓</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/ListView%E5%88%86%E5%89%B2%E7%BA%BF%E8%AE%BE%E7%BD%AE/" rel="next" title="Android 给ListView设置分割线与边界的距离">
+                <i class="fa fa-chevron-left"></i> Android 给ListView设置分割线与边界的距离
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/04/Android%20ListView%E5%88%86%E7%B1%BB%E5%88%86%E7%BB%84%E6%95%88%E6%9E%9C/" rel="prev" title="Android ListView分类/分组效果">
+                Android ListView分类/分组效果 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Evan</p>
+              <p class="site-description motion-element" itemprop="description">evan 互联网 程序员</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#material-calendarview"><span class="nav-number">2.</span> <span class="nav-text">material-calendarview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集成清单"><span class="nav-number">2.1.</span> <span class="nav-text">集成清单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能展示"><span class="nav-number">2.2.</span> <span class="nav-text">功能展示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、对照组：OldCalendarViewActivity"><span class="nav-number">2.2.1.</span> <span class="nav-text">一、对照组：OldCalendarViewActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、基本用法：BasicActivity"><span class="nav-number">2.2.2.</span> <span class="nav-text">二、基本用法：BasicActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、修饰选中日期：BasicActivityDecorated"><span class="nav-number">2.2.3.</span> <span class="nav-text">三、修饰选中日期：BasicActivityDecorated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、模式切换：SwappableBasicActivityDecorated"><span class="nav-number">2.2.4.</span> <span class="nav-text">四、模式切换：SwappableBasicActivityDecorated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、日期禁用：DisableDaysActivity"><span class="nav-number">2.2.5.</span> <span class="nav-text">五、日期禁用：DisableDaysActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、透过xml自定义控件：CustomizeXmlActivity"><span class="nav-number">2.2.6.</span> <span class="nav-text">六、透过xml自定义控件：CustomizeXmlActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#七、透过java自定义控件：CustomizeCodeActivity"><span class="nav-number">2.2.7.</span> <span class="nav-text">七、透过java自定义控件：CustomizeCodeActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#八、完整的设置展示DynamicSettersActivity"><span class="nav-number">2.2.8.</span> <span class="nav-text">八、完整的设置展示DynamicSettersActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#九、在Dialog中显示日历：DialogsActivity"><span class="nav-number">2.2.9.</span> <span class="nav-text">九、在Dialog中显示日历：DialogsActivity</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展：滑屏时自动选中日期"><span class="nav-number">2.3.</span> <span class="nav-text">拓展：滑屏时自动选中日期</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Evan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

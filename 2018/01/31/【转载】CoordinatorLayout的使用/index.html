@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="安卓,转载," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在Google I&#x2F;O 15上，谷歌发布了一个新的 support library，里面包含了一些遵循Material Design’s spec的UI组件，比如，AppbarLayout, CollapsingToolbarLayout 和 CoordinatorLayout。 这些组件配合起来使用可以产生强大的效果，那么让我们通过这篇文章来学习如何使用这些组件。 CoordinatorLayo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】CoordinatorLayout的使用">
+<meta property="og:url" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Evan的小院">
+<meta property="og:description" content="在Google I&#x2F;O 15上，谷歌发布了一个新的 support library，里面包含了一些遵循Material Design’s spec的UI组件，比如，AppbarLayout, CollapsingToolbarLayout 和 CoordinatorLayout。 这些组件配合起来使用可以产生强大的效果，那么让我们通过这篇文章来学习如何使用这些组件。 CoordinatorLayo">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/1.gif">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/2.gif">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/3.gif">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/4.gif">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/5.png">
+<meta property="og:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/6.gif">
+<meta property="article:published_time" content="2018-01-30T18:12:00.000Z">
+<meta property="article:modified_time" content="2018-01-30T18:30:12.000Z">
+<meta property="article:author" content="Evan">
+<meta property="article:tag" content="安卓">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evan-yjq.github.io/2018/01/31/【转载】CoordinatorLayout的使用/"/>
+
+
+
+
+
+  <title>【转载】CoordinatorLayout的使用 | Evan的小院</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evan的小院</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evan-yjq.github.io/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Evan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evan的小院">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【转载】CoordinatorLayout的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-31T02:12:00+08:00">
+                2018-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%89%E5%8D%93/" itemprop="url" rel="index">
+                    <span itemprop="name">安卓</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<a href="https://www.youtube.com/watch?v=7V-fIGMDsmE" target="_blank" rel="noopener">Google I/O 15</a>上，谷歌发布了一个新的<a href="http://android-developers.blogspot.com.es/2015/05/android-design-support-library.html" target="_blank" rel="noopener"> support library</a>，里面包含了一些遵循<a href="https://www.google.com/design/spec/material-design/introduction.html" target="_blank" rel="noopener">Material Design’s spec</a>的UI组件，比如，<code>AppbarLayout</code>, <code>CollapsingToolbarLayout</code> 和 <code>CoordinatorLayout</code>。 这些组件配合起来使用可以产生强大的效果，那么让我们通过这篇文章来学习如何使用这些组件。</p>
+<h3 id="CoordinatorLayout"><a href="#CoordinatorLayout" class="headerlink" title="CoordinatorLayout"></a>CoordinatorLayout</h3><p>从名字可以看出，这个ViewGroup是用来协调它的子View的。看下图：</p>
+<p><img src="/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/1.gif" alt="1.gif"></p>
+<p>这个例子中的各个View相互影响，却被和谐的组织在了一起。这就是使用<code>CoordinatorLayout</code>最简单的实例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@android:color/background_light"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/main.appbar"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"300dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">android.support.design.widget.CollapsingToolbarLayout</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/main.collapsing"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|exitUntilCollapsed"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:contentScrim</span>=<span class="string">"?attr/colorPrimary"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:expandedTitleMarginStart</span>=<span class="string">"48dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:expandedTitleMarginEnd</span>=<span class="string">"64dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/main.backdrop"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:scaleType</span>=<span class="string">"centerCrop"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:src</span>=<span class="string">"@drawable/material_flat"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">app:layout_collapseMode</span>=<span class="string">"parallax"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/main.toolbar"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">app:popupTheme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">app:layout_collapseMode</span>=<span class="string">"pin"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">android.support.design.widget.CollapsingToolbarLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v4.widget.NestedScrollView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textSize</span>=<span class="string">"20sp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:lineSpacingExtra</span>=<span class="string">"8dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"@string/lorem"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:padding</span>=<span class="string">"@dimen/activity_horizontal_margin"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.v4.widget.NestedScrollView</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_margin</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@drawable/ic_comment_24dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_anchor</span>=<span class="string">"@id/main.appbar"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_anchorGravity</span>=<span class="string">"bottom|right|end"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看一下上面Layout的结构，<code>CoordinatorLayout</code>包含三个子View： 一个<code>AppbarLayout</code>，一个scrolleable View，一个指定了⚓锚点的<code>FloatingActionBar</code>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">CoordinatorLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AppbarLayout</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scrollableView</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">FloatingActionButton</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="AppBarLayout"><a href="#AppBarLayout" class="headerlink" title="AppBarLayout"></a>AppBarLayout</h3><p>首先，<code>AppBarLayout</code>是一个<code>LinearLayout</code>，它的子View默认纵向排列， 可以通过一些参数控制子View的滑动行为。这么说你还是很难理解，所以无图无真相，上GIF：</p>
+<p><img src="/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/2.gif" alt="2.gif"></p>
+<p>这张图最上面是一个可折叠图片（collapsing image），图片下面的蓝色View就是<code>AppBarLayout</code>，它包含了一个<code>Toolbar</code>，一个有标题和子标题的<code>LinearLayout</code>，一个带有Tab的<code>TabLayout</code>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">AppBarLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CollapsingToolbarLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|snap"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Toolbar</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|snap"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"+id/title_container"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|enterAlways"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TabLayout</span> /&gt;</span> <span class="comment">&lt;!-- no flags --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">AppBarLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>AppbarLayout</code>的直接子View的操控行为，可以通过给子View添加<code>layout_scrollFlags</code>属性来控制。关于这个属性的值：<code>scroll</code>，在这个例子中用到了这个值。如果一个子View没有赋值<code>scroll</code>，那么滑动的时候，它就会一直静态显示，而其他<code>scroll</code>的View就会被划到它的后面隐藏。</p>
+<p>另一个值<code>snap</code>的作用是避免一个View停留在动画的中间状态，也就是说滑动结束的时候一个View要么全部显示，要么全部隐藏，不会展示View的部分。</p>
+<p>上面的<code>LinearLayout</code>指定了<code>enterAlways</code>，所以下拉的时候，它就会一直出现。<code>TabLayout</code> 没有指定，所以它一直静态显示。</p>
+<p>由此，给子View使用不同的<code>layout_scrollFlags</code>就会生成不同的<code>AppBarLayout</code>。全部属性值参照<a href="https://developer.android.com/intl/es/reference/android/support/design/widget/AppBarLayout.LayoutParams.html#CONSTANTS" target="_blank" rel="noopener">官方文档</a>，文章最后我也会提供几个放在Github上的实例。</p>
+<h3 id="AppbarLayout-flags"><a href="#AppbarLayout-flags" class="headerlink" title="AppbarLayout flags"></a>AppbarLayout flags</h3><p>*SCROLL_FLAG_ENTER_ALWAYS：((entering) / (scrolling on screen))下拉的时候，这个View也会跟着滑出。</p>
+<p>*SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED：另一种<code>enterAlways</code>，但是只显示折叠后的高度。</p>
+<p>*SCROLL_FLAG_EXIT_UNTIL_COLLAPSED：((exiting) / (scrolling off screen))上拉的时候，这个View会跟着滑动直到折叠。</p>
+<p>*SCROLL_FLAG_SCROLL：跟着滑动方向滑动。</p>
+<p>*SCROLL_FLAG_SNAP：滑动结束的时候，如果这个View部分显示，它就会滑动到离它最近的上边缘或下边缘。</p>
+<h3 id="CoordinatorLayout-Behaviors"><a href="#CoordinatorLayout-Behaviors" class="headerlink" title="CoordinatorLayout Behaviors"></a>CoordinatorLayout Behaviors</h3><p>打开Android Studio (&gt;= 1.4)，用模版<code>Scrolling Activity</code>新建一个项目，然后直接编译运行。看到：</p>
+<p><img src="/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/3.gif" alt="3.gif"></p>
+<p>查看生成的代码，没发现滑动时候Fab大小变化动画的相关代码，Why？ 答案在<code>FloatingActionButton</code>的源代码中，感谢Android Studio v1.2自带了反编译源代码的功能，<code>ctrl/cmd + click</code>我们来<code>FloatingActionButton</code>的源码中究竟干了什么。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Copyright (C) 2015 The Android Open Source Project</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Floating action buttons are used for a</span></span><br><span class="line"><span class="comment"> *  special type of promoted action. </span></span><br><span class="line"><span class="comment"> *  They are distinguished by a circled icon </span></span><br><span class="line"><span class="comment"> *  floating above the UI and have special motion behaviors </span></span><br><span class="line"><span class="comment"> *  related to morphing, launching, and the transferring anchor point.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *  blah.. blah.. </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@CoordinatorLayout</span>.DefaultBehavior(FloatingActionButton.Behavior<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">FloatingActionButton</span> <span class="keyword">extends</span> <span class="title">ImageButton</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Behavior</span> </span></span><br><span class="line"><span class="class">        <span class="keyword">extends</span> <span class="title">CoordinatorLayout</span>.<span class="title">Behavior</span>&lt;<span class="title">FloatingActionButton</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">updateFabVisibility</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">           CoordinatorLayout parent, AppBarLayout appBarLayout, </span></span></span><br><span class="line"><span class="function"><span class="params">           FloatingActionButton child &#123;</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">           <span class="keyword">if</span> (a <span class="keyword">long</span> condition)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// If the anchor's bottom is below the seam, </span></span><br><span class="line">                <span class="comment">// we'll animate our FAB out</span></span><br><span class="line">                child.hide();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// Else, we'll animate our FAB back in</span></span><br><span class="line">                child.show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实那个大小变化动画是design包中的<code>Behavior</code>控制的，上面的<code>CoordinatorLayout.Behavior&lt;FloatingAcctionButton&gt;</code>控制显示或隐藏FAB，interesting？</p>
+<h3 id="SwipeDismissBehavior"><a href="#SwipeDismissBehavior" class="headerlink" title="SwipeDismissBehavior"></a>SwipeDismissBehavior</h3><p>在 design support library 中，我们发现了<code>SwipeDismissBehavior</code>，有了它，我们可以在<code>CoordinatorLayout</code>中轻松实现滑动删除功能。</p>
+<p><img src="/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/4.gif" alt="4.gif"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_swipe_behavior);</span><br><span class="line">    mCardView = (CardView) findViewById(R.id.swype_card);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> SwipeDismissBehavior&lt;CardView&gt; swipe = <span class="keyword">new</span> SwipeDismissBehavior();</span><br><span class="line"></span><br><span class="line">        swipe.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY);</span><br><span class="line"></span><br><span class="line">        swipe.setListener(</span><br><span class="line">            <span class="keyword">new</span> SwipeDismissBehavior.OnDismissListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDismiss</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(SwipeBehaviorExampleActivity.<span class="keyword">this</span>,</span><br><span class="line">                    <span class="string">"Card swiped !!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span> </span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDragStateChanged</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        LayoutParams coordinatorParams = (LayoutParams) mCardView.getLayoutParams();</span><br><span class="line"></span><br><span class="line">        coordinatorParams.setBehavior(swipe);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Custom-Behaviors"><a href="#Custom-Behaviors" class="headerlink" title="Custom Behaviors"></a>Custom Behaviors</h3><p>自定义Behavior并不难，首先介绍两个元素：child 和 dependency。</p>
+<p><img src="/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/5.png" alt="5.png"></p>
+<h4 id="Childs-and-dependencies"><a href="#Childs-and-dependencies" class="headerlink" title="Childs and dependencies"></a>Childs and dependencies</h4><p>要改变行为的那个View就是child，dependency是作为触发器影响child的那个View。这个例子中child是<code>ImageView</code>，dependency是<code>Toolbar</code>，然后，<code>Toolbar</code>滑动的时候，<code>ImageView</code>跟着滑动。</p>
+<p><img src="/2018/01/31/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91CoordinatorLayout%E7%9A%84%E4%BD%BF%E7%94%A8/6.gif" alt="6.gif"></p>
+<p>下面开始创建自定义Behavior，首先，继承<code>CoordinatorLayout.Behavior&lt;T&gt;</code>，<code>T</code>就是child的类型，上面例子是那个ImageView，然后我们重写方法 *layoutDependsOn *onDependentViewChanged 每当UI变化的时候就会调用<code>layoutDependsOn</code>，鉴定完dependency后一定要返回true。上面例子中用户一滑动就会自动调用<code>layoutDependsOn</code>，然后开始控制child 的行为。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, </span></span></span><br><span class="line"><span class="function"><span class="params">	CircleImageView, child, View dependency)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> dependency <span class="keyword">instanceof</span> Toolbar; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>layoutDependsOn</code>返回true后就开始调用<code>onDependentViewChanged</code>，在这个方法中我们利用dependency来实现动画，转换，动作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, </span></span></span><br><span class="line"><span class="function"><span class="params">		CircleImageView avatar, View dependency)</span> </span>&#123;</span><br><span class="line">	modifyAvatarDependingDependencyState(avatar, dependency);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">modifyAvatarDependingDependencyState</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    CircleImageView avatar, View dependency)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//  avatar.setY(dependency.getY());</span></span><br><span class="line">	<span class="comment">//  avatar.setBlahBlat(dependency.blah / blah);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>放在一起就是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AvatarImageBehavior</span> <span class="keyword">extends</span> <span class="title">CoordinatorLayout</span>.<span class="title">Behavior</span>&lt;<span class="title">CircleImageView</span>&gt; </span>&#123;</span><br><span class="line">  </span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, </span></span></span><br><span class="line"><span class="function"><span class="params">			CircleImageView, child, View dependency)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> dependency <span class="keyword">instanceof</span> Toolbar; </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, </span></span></span><br><span class="line"><span class="function"><span class="params">			CircleImageView avatar, View dependency)</span> </span>&#123;</span><br><span class="line">		modifyAvatarDependingDependencyState(avatar, dependency);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">modifyAvatarDependingDependencyState</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params"> 			CircleImageView avatar, View dependency)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//  avatar.setY(dependency.getY());</span></span><br><span class="line">        <span class="comment">//  avatar.setBlahBlah(dependency.blah / blah);</span></span><br><span class="line">	&#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="http://saulmm.github.io/mastering-coordinator" target="_blank" rel="noopener">原文</a></p>
+<h3 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h3><p>＊<a href="https://github.com/saulmm/CoordinatorBehaviorExample" target="_blank" rel="noopener">Coordinator Behavior Example</a>- Github</p>
+<p>＊<a href="https://github.com/saulmm/CoordinatorExamples" target="_blank" rel="noopener">Coordinator Examples</a>- Github</p>
+<p>＊<a href="https://lab.getbase.com/introduction-to-coordinator-layout-on-android/" target="_blank" rel="noopener">Introduction to coordinator layout on Android</a>- Grzesiek Gajewski</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AE%89%E5%8D%93/" rel="tag"># 安卓</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/30/%E5%AE%89%E5%8D%93dimen%E8%8E%B7%E5%8F%96/" rel="next" title="getDimension,getDimensionPixelOffset和getDimensionPixelSize的一点说明">
+                <i class="fa fa-chevron-left"></i> getDimension,getDimensionPixelOffset和getDimensionPixelSize的一点说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/ListView%E5%88%86%E5%89%B2%E7%BA%BF%E8%AE%BE%E7%BD%AE/" rel="prev" title="Android 给ListView设置分割线与边界的距离">
+                Android 给ListView设置分割线与边界的距离 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Evan</p>
+              <p class="site-description motion-element" itemprop="description">evan 互联网 程序员</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CoordinatorLayout"><span class="nav-number">1.</span> <span class="nav-text">CoordinatorLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AppBarLayout"><span class="nav-number">2.</span> <span class="nav-text">AppBarLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AppbarLayout-flags"><span class="nav-number">3.</span> <span class="nav-text">AppbarLayout flags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CoordinatorLayout-Behaviors"><span class="nav-number">4.</span> <span class="nav-text">CoordinatorLayout Behaviors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SwipeDismissBehavior"><span class="nav-number">5.</span> <span class="nav-text">SwipeDismissBehavior</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Behaviors"><span class="nav-number">6.</span> <span class="nav-text">Custom Behaviors</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Childs-and-dependencies"><span class="nav-number">6.1.</span> <span class="nav-text">Childs and dependencies</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resources"><span class="nav-number">7.</span> <span class="nav-text">Resources</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Evan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
