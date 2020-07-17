@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/images/Birthday-cake.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>生日快乐</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/utils.js"></script>
+</head>
+<body class="body">
+    <div class="container-fluid">
+        <audio id="audio" class="audio" preload="auto" loop autoplay>
+            <source src="/music/happy-birthday.mp3" type="audio/mpeg">
+        </audio>
+        <p id="zhu" class="zhu">祝</p>
+        <p id="name" class="name" data-toggle="modal" data-target="#modal">陈舟行</p>
+        <img id="cake" class="cake" alt="cake" src="/images/cake.svg"/>
+        <p id="sui" class="sui">岁</p>
+        <p id="happy" class="happy">生日快乐</p>
+        <div id="tags"></div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="title"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title">+ 印象</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" placeholder="你对她的印象（2-4个字）" class="form-control" id="input"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="submit" type="button" class="btn btn-primary">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="/js/components/cake.js"></script>
+<script src="/js/components/zhu.js"></script>
+<script src="/js/components/name.js"></script>
+<script src="/js/components/sui.js"></script>
+<script src="/js/components/happy.js"></script>
+<script src="/js/components/tag.js"></script>
+
+<script src="/js/index.js"></script>
+</body>
+</html>

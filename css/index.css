@@ -1,0 +1,74 @@
+.body{
+    height: 100vh;
+    background: aqua;
+    /*background-image: url(../images/bg.png);*/
+    /*background-size: 100%;*/
+    margin: 0;
+}
+
+@font-face {
+    font-family: ajcFont;
+    src: url(../font/书体坊安景臣钢笔行书.ttf)
+}
+
+@font-face {
+    font-family: lttFont;
+    src: url(../font/书体坊兰亭体.ttf)
+}
+
+.audio{
+    position:absolute;
+    display: inline-block;
+}
+
+.zhu{
+    position:absolute;
+    display: inline-block;
+    color: orangered;
+    /*font-size: 150px;*/
+    font-family: ajcFont, serif;
+    margin: 0;
+}
+
+.name{
+    position:absolute;
+    display: inline-block;
+    color: white;
+    /*font-size: 120px;*/
+    font-family: lttFont, serif;
+    /*background: #80808080;*/
+    margin: 0;
+}
+
+.cake{
+    position:absolute;
+    display: inline-block;
+}
+
+.sui{
+    position:absolute;
+    display: inline-block;
+    color: white;
+    /*font-size: 120px;*/
+    font-family: ajcFont, serif;
+    /*background: #80808080;*/
+    margin: 0;
+}
+
+.happy{
+    position:absolute;
+    display: inline-block;
+    color: orange;
+    /*font-size: 120px;*/
+    font-family: ajcFont, serif;
+    /*background: #80808080;*/
+    margin: 0;
+}
+
+.tag{
+    position:absolute;
+    color: rebeccapurple;
+    display: inline-block;
+    background: #80808080;
+    margin: 0;
+}
